@@ -24,14 +24,14 @@ class _InputPageState extends State<InputPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inputs de texto'),
+        title: Text('Ingresar información de mascotas'),
       ),
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
         children: <Widget>[
-          _crearInput(),
-          Divider(),
           _crearInput2(),
+          Divider(),
+          _crearInput(),
           Divider(),
           _crearEdad(),
           Divider(),
@@ -39,20 +39,32 @@ class _InputPageState extends State<InputPage> {
           Divider(),
           _crearRaza(),
           Divider(),
-          _crearDropdown(),
+          _crearSexo(),
           Divider(),
           _crearFecha(context),
           Divider(),
+          _crearDropdown(),
+          Divider(),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 25),
             child: RaisedButton(
-              child: Text('Enviar'),
-              color: Colors.blue,
+              child: Text('Visualizar'),
+              color: Colors.green.shade900,
               textColor: Colors.white,
               shape: StadiumBorder(),
               onPressed: () => _mostrarAlert(context),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 25),
+            child: RaisedButton(
+              child: Text('Limpiar'),
+              color: Colors.green.shade900,
+              textColor: Colors.white,
+              shape: StadiumBorder(),
+              onPressed: () => _limpiarDatos(context),
+            ),
+          )
         ],
       ),
     );
@@ -106,6 +118,23 @@ class _InputPageState extends State<InputPage> {
       onChanged: (valor) {
         setState(() {
           _edad = valor;
+        });
+      },
+    );
+  }
+
+  Widget _crearSexo() {
+    return TextField(
+      // autofocus: true,
+      textCapitalization: TextCapitalization.sentences,
+      decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+          hintText: 'Indique el sexo de su mascota',
+          labelText: 'Sexo',
+          icon: Icon(Icons.pets_rounded)),
+      onChanged: (valor) {
+        setState(() {
+          _sexo = valor;
         });
       },
     );
@@ -224,7 +253,14 @@ class _InputPageState extends State<InputPage> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text('Nombre del animalito: ' + _nombreD),
+                Text('Nombre dueño: ' + _nombreD),
+                Text('Nombre mascota: ' + _nombreM),
+                Text('Edad mascota: ' + _edad),
+                Text('Telefono: ' + _telefono),
+                Text('Raza: ' + _raza),
+                Text('Sexo: ' + _sexo),
+                Text('Fecha de nacimiento: ' + _fecha),
+                Text('Ripo mascota: ' + _opcionSeleccionada),
               ],
             ),
             actions: <Widget>[
@@ -233,7 +269,7 @@ class _InputPageState extends State<InputPage> {
                 onPressed: () => Navigator.of(context).pop(),
               ),
               FlatButton(
-                child: Text('Ok'),
+                child: Text('Entendido'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -241,5 +277,16 @@ class _InputPageState extends State<InputPage> {
             ],
           );
         });
+  }
+
+  void _limpiarDatos(BuildContext context) {
+    _nombreD = "";
+    _nombreM = '';
+    _edad = '';
+    _telefono = '';
+    _raza = '';
+    _sexo = '';
+    _fecha = '';
+    _opcionSeleccionada = 'Canino';
   }
 }
